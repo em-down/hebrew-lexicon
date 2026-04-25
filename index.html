@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>God Has a Name · Hebrew Lexicon</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --white: #ffffff;
+    --bg: #f7f5f2;
+    --bg-card: #ffffff;
+    --gold: #b8901a;
+    --gold-light: #e8c45a;
+    --gold-pale: #fdf6e3;
+    --green: #3a5a40;
+    --green-mid: #5a7a5e;
+    --green-pale: #eef3ee;
+    --ink: #1c1c1a;
+    --mid: #6b6860;
+    --light: #b0aca4;
+    --border: #ece9e3;
+    --shadow: 0 2px 16px rgba(60,50,30,0.07);
+    --shadow-hover: 0 8px 32px rgba(60,50,30,0.13);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    color: var(--ink);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  header {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    height: 64px;
+  }
+
+  .header-left { display: flex; align-items: center; gap: 16px; }
+
+  .logo-hebrew {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: var(--green);
+    direction: rtl;
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+
+  .logo-divider {
+    width: 1px;
+    height: 32px;
+    background: var(--border);
+  }
+
+  .logo-text { display: flex; flex-direction: column; gap: 2px; }
+
+  .logo-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: 0.01em;
+  }
+
+  .logo-sub {
+    font-size: 0.68rem;
+    font-weight: 300;
+    color: var(--light);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* Right side of header: search + hamburger */
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .search-box {
+    position: relative;
+    width: 220px;
+  }
+
+  .search-box input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 8px 16px 8px 34px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+
+  .search-box input::placeholder { color: var(--light); }
+
+  .search-box input:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(58,90,64,0.08);
+    background: var(--white);
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--light);
+    font-size: 0.8rem;
+    pointer-events: none;
+  }
+
+  /* Hamburger button */
+  .burger {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    flex-shrink: 0;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .burger:hover { background: var(--bg); border-color: var(--green); }
+  .burger.open  { background: var(--green-pale); border-color: var(--green); }
+
+  .burger span {
+    display: block;
+    width: 16px;
+    height: 1.5px;
+    background: var(--mid);
+    border-radius: 2px;
+    transition: all 0.25s ease;
+    transform-origin: center;
+  }
+
+  .burger.open span { background: var(--green); }
+  .burger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .burger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* Dropdown menu */
+  .dropdown {
+    position: absolute;
+    top: 65px;
+    right: 32px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(60,50,30,0.12);
+    padding: 8px;
+    width: 210px;
+    z-index: 100;
+    opacity: 0;
+    transform: translateY(-8px) scale(0.97);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .dropdown.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: all;
+  }
+
+  .tab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 14px;
+    border: none;
+    background: transparent;
+    color: var(--mid);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 400;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background 0.15s, color 0.15s;
+    text-align: left;
+    gap: 12px;
+  }
+
+  .tab:hover { background: var(--bg); color: var(--ink); }
+
+  .tab.active {
+    background: var(--green-pale);
+    color: var(--green);
+    font-weight: 500;
+  }
+
+  .tab-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  .tab.active .tab-dot { opacity: 1; }
+
+  .dropdown-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 6px 0;
+  }
+
+  /* Active filter pill shown in header */
+  .active-filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--green);
+    background: var(--green-pale);
+    border: 1px solid rgba(58,90,64,0.15);
+    border-radius: 100px;
+    padding: 4px 10px;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
+  .filter-row { display: none; }
+
+  main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 28px 32px 80px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
+    gap: 14px;
+  }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px 22px 18px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: var(--shadow);
+    animation: fadeUp 0.4s ease backwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green), var(--gold-light));
+    opacity: 0;
+    transition: opacity 0.25s;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-3px);
+    border-color: rgba(58,90,64,0.18);
+  }
+
+  .card:hover::after { opacity: 1; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-tag {
+    display: inline-flex;
+    font-size: 0.63rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-bottom: 14px;
+  }
+
+  .tag-names     { background: var(--green-pale); color: var(--green); }
+  .tag-character { background: var(--gold-pale);  color: var(--gold); }
+  .tag-sin       { background: #fdf0f0; color: #8b3a3a; }
+  .tag-other     { background: #f0f0fd; color: #3a3a8b; }
+
+  .card-hebrew {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.3rem;
+    font-weight: 300;
+    color: var(--green);
+    direction: rtl;
+    text-align: right;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  .card-transliteration {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+
+  .card-translation {
+    font-size: 0.77rem;
+    font-weight: 300;
+    color: var(--mid);
+    margin-bottom: 12px;
+  }
+
+  .card-rule { height: 1px; background: var(--border); margin-bottom: 12px; }
+
+  .card-meaning {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.65;
+  }
+
+  .card-source {
+    margin-top: 12px;
+    font-size: 0.68rem;
+    font-weight: 300;
+    color: var(--light);
+    font-style: italic;
+  }
+
+  .empty {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 80px 24px;
+    color: var(--light);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+  }
+
+  /* Modal */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(28,24,18,0.45);
+    z-index: 200;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    backdrop-filter: blur(4px);
+  }
+
+  @media (min-width: 640px) {
+    .overlay { align-items: center; padding: 32px; }
+  }
+
+  .overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: var(--white);
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: 540px;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 28px 28px 40px;
+    transform: translateY(24px);
+    transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  @media (min-width: 640px) {
+    .modal { border-radius: 20px; padding: 36px 40px 40px; }
+  }
+
+  .overlay.open .modal { transform: translateY(0); }
+
+  .handle {
+    width: 36px; height: 4px;
+    background: var(--border);
+    border-radius: 100px;
+    margin: 0 auto 20px;
+  }
+
+  @media (min-width: 640px) { .handle { display: none; } }
+
+  .modal-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+
+  .modal-close {
+    background: var(--bg);
+    border: none;
+    width: 30px; height: 30px;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--mid);
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+
+  .modal-close:hover { background: var(--border); }
+
+  .modal-hebrew {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 12vw, 4.2rem);
+    font-weight: 300;
+    color: var(--green);
+    direction: rtl;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .modal-tr {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: 3px;
+  }
+
+  .modal-en {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--mid);
+    margin-bottom: 22px;
+  }
+
+  .modal-rule { height: 1px; background: var(--border); margin-bottom: 18px; }
+
+  .modal-meaning {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1.82;
+    margin-bottom: 20px;
+  }
+
+  .modal-quote {
+    background: var(--green-pale);
+    border-left: 3px solid var(--green);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 18px;
+  }
+
+  .modal-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--green);
+    line-height: 1.72;
+    margin-bottom: 8px;
+  }
+
+  .modal-quote cite {
+    font-size: 0.7rem;
+    font-weight: 300;
+    color: var(--green-mid);
+    letter-spacing: 0.05em;
+    font-style: normal;
+  }
+  .context-banner {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px 28px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+
+  .context-banner p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--mid);
+    line-height: 1.8;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="logo-hebrew">יהוה</div>
+    <div class="logo-divider"></div>
+    <div class="logo-text">
+      <div class="logo-title">God Has a Name</div>
+      <div class="logo-sub">Hebrew Lexicon · Phase One</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="active-filter" id="active-label">All words</span>
+    <button class="burger" id="burger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="dropdown" id="dropdown">
+  <button class="tab active" onclick="filterCat('all',this)"><span>All words</span><span class="tab-dot"></span></button>
+  <div class="dropdown-divider"></div>
+  <button class="tab" onclick="filterCat('names',this)"><span>Names of God</span><span class="tab-dot"></span></button>
+  <button class="tab" onclick="filterCat('character',this)"><span>Character of God</span><span class="tab-dot"></span></button>
+  <button class="tab" onclick="filterCat('sin',this)"><span>Sin &amp; Forgiveness</span><span class="tab-dot"></span></button>
+  <button class="tab" onclick="filterCat('other',this)"><span>Other Words</span><span class="tab-dot"></span></button>
+</div>
+
+<main>
+  <div class="filter-row"></div>
+  <div class="context-banner">
+    <p>This project was inspired by the deeper understanding of Hebrew that I gained through Phase 1 of Catalyst. Hebrew is a language of extraordinary richness and meaning — and it's one I may never have encountered so intimately without the content we explored together this year.</p>
+  </div>
+  <div class="grid" id="grid"></div>
+</main>
+
+<div class="overlay" id="overlay" onclick="maybeClose(event)">
+  <div class="modal" id="modal">
+    <div class="handle"></div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const CAT = {
+  names:     { label:'Names of God',       cls:'tag-names' },
+  character: { label:'Character of God',   cls:'tag-character' },
+  sin:       { label:'Sin & Forgiveness',  cls:'tag-sin' },
+  other:     { label:'Words & Phrases',    cls:'tag-other' },
+};
+
+const words = [
+  {id:1,cat:'names',hebrew:'יהוה',tr:'Yahweh',en:'"He is"',
+   meaning:'The personal name of God. Four consonants — Y·H·W·H — with no written vowels in the original text. From the same root as ehyeh, but in the third person: when God says his name it is ehyeh ("I am"); when we say it, it is Yahweh ("he is"). Almost all Hebrew scholars believe Yahweh is correct, but it remains a best guess since the vowels were never recorded.',
+   comer:'God is saying that he\'ll reveal his identity to Moses — the deepest reality of his being.',src:'Exodus 3 & 34'},
+  {id:2,cat:'names',hebrew:'אֶהְיֶה',tr:'Ehyeh',en:'"I am"',
+   meaning:'The first-person form of Yahweh. When Moses asks God his name at the burning bush, God replies: ehyeh-asher-ehyeh — "I am who I am." The phrase can also mean "whatever I am, I will be," conveying that this God is consistent, unshifting, the same 24/7.',
+   comer:'YHWH is from the exact same root word as I AM WHO I AM, but ehyeh is first person, and Yahweh is third person.',src:'Exodus 3:14'},
+  {id:3,cat:'names',hebrew:'אֱלֹהִים',tr:'Elohim',en:'"God" / "gods"',
+   meaning:'Not a name but a category word — the same Hebrew word can be translated "God" (singular) or "gods" (plural) depending on context. An elohim is an invisible-but-real spiritual being. The Creator is the one Elohim who made everything — in a completely different category from all others.',
+   comer:'In the beginning God created the heavens and the earth. In Hebrew, the word God is elohim. It\'s not a name; it\'s a category.',src:'Genesis 1:1; Psalm 82'},
+  {id:4,cat:'names',hebrew:'אֵל שַׁדַּי',tr:'El Shaddai',en:'"God Almighty"',
+   meaning:'The name God used when he first appeared to Abraham. By calling himself El Shaddai, God was speaking Abraham\'s cultural language while announcing he surpassed every divine category his world knew.',
+   comer:'The Creator calls himself El Shaddai, which is a way of saying, "I\'m like El, but I\'m so much more."',src:'Genesis 17:1; Exodus 6:3'},
+  {id:5,cat:'names',hebrew:'אֵל עֶלְיוֹן',tr:'El Elyon',en:'"God Most High"',
+   meaning:'Used before Moses, when God was revealing himself to Abraham in language fitting the ancient Near Eastern world. Elyon means "highest" or "uppermost" — the one above all others in the divine hierarchy.',
+   comer:'God calls himself El Elyon (God Most High) to put it in language that would make sense to Abraham and his world.',src:'Genesis 14:18–20'},
+  {id:6,cat:'names',hebrew:'אֵל עוֹלָם',tr:'El Olam',en:'"God Everlasting"',
+   meaning:'Olam in Hebrew means "forever" or "eternity." This name emphasises God\'s eternal nature — he exists outside of and beyond time. Used with Abraham before God\'s full name Yahweh was disclosed.',
+   comer:'God calls himself El Olam (God Everlasting), to put it in language that would make sense to Abraham and his world.',src:'Genesis 21:33'},
+  {id:7,cat:'names',hebrew:'אֲדֹנָי',tr:'Adonai',en:'"Lord"',
+   meaning:'A title (not a name) substituted for Yahweh to avoid accidentally misusing God\'s name. In the ancient Near East, adonai was what a servant called his master. The vowels of adonai combined with the consonants of YHWH formed "Jehovah." Most English Bibles translate YHWH as "the LORD" in capitals because of this tradition.',
+   comer:'The most common title was adonai, a Hebrew word meaning "Lord." In the ancient Near East, that\'s what a servant would call his master.',src:'Exodus 34:6 tradition'},
+  {id:8,cat:'names',hebrew:'הַשֵּׁם',tr:'Hashem',en:'"The Name"',
+   meaning:'A substitution title used by devout Jews in place of Yahweh. Simply meaning "the name," it acknowledges that God has a personal identity without pronouncing the sacred name aloud.',
+   comer:'A popular one was simply hashem, "the name." But the most common title was adonai.',src:'Jewish tradition, Exodus 20:7'},
+  {id:9,cat:'character',hebrew:'רַחוּם',tr:'Rahum',en:'"Compassionate" / "Merciful"',
+   meaning:'Root word: rechem — the Hebrew word for female womb. The idea is the instinctive, visceral, gut-level love a mother has toward her infant. It is a feeling word. Yahweh\'s compassion is not merely polite kindness; it is a deep, maternal ache toward his people.',
+   comer:'Rahum is from a root word meaning "female womb." The idea behind it is the feeling a mother has toward her infant child.',src:'Exodus 34:6'},
+  {id:10,cat:'character',hebrew:'חַנּוּן',tr:'Hanun',en:'"Gracious"',
+   meaning:'Where rahum is a feeling, hanun is an action — to show grace, to show favour, to help someone in their time of need. It is something God does, not just something he feels. To hanun someone is to come to their rescue.',
+   comer:'Gracious is an action word. In Hebrew, it\'s hanun. It means "to show grace" or "to show favor." To hanun somebody is to help them out in a time of need.',src:'Exodus 34:6'},
+  {id:11,cat:'character',hebrew:'רַחוּם וְחַנּוּן',tr:'Rahum we-hanun',en:'"Compassionate and gracious"',
+   meaning:'A Hebrew word pairing — two words placed side by side that sound alike and interpret each other. Yahweh both feels deeply (rahum) and acts to help (hanun). The feeling always leads to action.',
+   comer:'Rahum we-hanun is a word pairing in Hebrew. Not only do these two words sound alike, but they are laid side by side to help explain each other.',src:'Exodus 34:6'},
+  {id:12,cat:'character',hebrew:'אֶרֶךְ אַפַּיִם',tr:'Erek apayim',en:'"Slow to anger" — literally "long of nostrils"',
+   meaning:'A vivid ancient word picture: short nostrils flare in instant rage; long nostrils breathe slow and steady. Early English Bibles used "long-suffering." Yahweh is not volatile or edgy. His anger builds slowly — and only when fully warranted.',
+   comer:'It\'s erek apayim, and it literally means "long of nostrils." Yahweh is patient, long-suffering.',src:'Exodus 34:6; Proverbs 14:29'},
+  {id:13,cat:'character',hebrew:'חֶסֶד',tr:'Hesed',en:'"Steadfast love" / "Covenant loyalty"',
+   meaning:'One of the most important words in the Hebrew Bible — used 126 times in the Psalms alone. No single English word captures it. It is a covenant term, wrapping up all of God\'s positive attributes. Not merely affection; it is fierce, loyal, binding commitment to the bitter end.',
+   comer:'The Hebrew hesed cannot be translated with one English word. This is a covenant term, wrapping up in itself all the positive attributes of God. — Daniel Block, Hebrew scholar',src:'Exodus 34:6; Psalms (×126)'},
+  {id:14,cat:'character',hebrew:'אֱמֶת',tr:'Emet',en:'"Faithfulness" / "Truth"',
+   meaning:'Paired with hesed as a hendiadys — two nouns fused to define each other. Literally means "truth"; root of the word amen. Carries the idea of reliability and trustworthiness. Together, hesed and emet describe God\'s loyalty: he never abandons his people, no matter what.',
+   comer:'Emet can also be translated as "trustworthy." It has the idea of reliability. You can count on this God Yahweh. He won\'t let you down.',src:'Exodus 34:6'},
+  {id:15,cat:'character',hebrew:'נָצַר',tr:'Ntsr',en:'"To protect" / "To guard"',
+   meaning:'The root behind "maintaining love to thousands" in Exodus 34:7. The image is of Yahweh as a sentry on guard — actively watching over his hesed, making sure it reaches his people. His love is not passive; it is protective. And it extends to thousands — no ceiling, no bottom.',
+   comer:'Yahweh is like a sentry on guard. He wants to make sure that you get his hesed. It\'s limitless — no ceiling, no bottom.',src:'Exodus 34:7; Psalm 40:11'},
+  {id:16,cat:'character',hebrew:'נָחַם',tr:'Naham',en:'"Relented" / "Changed his mind"',
+   meaning:'Carries the idea of emotional regret that leads to a change of direction. Used when Yahweh "relented" from destroying Israel (Exodus 32) and Nineveh (Jonah 3). It does not imply God was wrong — it means he was moved emotionally and responded. God is a person who can be genuinely influenced.',
+   comer:'The word naham carries this idea of regret or remorse over a decision. God was moved emotionally — he regretted his decision to judge so harshly, and changed his approach.',src:'Exodus 32:14; Jonah 3:10'},
+  {id:17,cat:'sin',hebrew:'נָשָׂא',tr:'Nasa',en:'"To forgive" — literally "to lift up," "to carry"',
+   meaning:'The word Yahweh uses for his own act of forgiveness in Exodus 34:7. The image is physical: sin as a heavy weight that God stoops to lift off your shoulders and carry away. Not merely a legal pardon — an act of bearing. The same word used in Isaiah 53 where the servant "bears" our iniquities.',
+   comer:'The Hebrew word translated as "forgiving" is nasa, and it literally means "to lift up," "to carry," or "to take away."',src:'Exodus 34:7'},
+  {id:18,cat:'sin',hebrew:'עָוֹן',tr:'Avon',en:'"Wickedness" / "Iniquity"',
+   meaning:'The broadest of the three Hebrew sin words. A catch-all for any kind of bad behaviour — from minor failings to atrocity. Comer calls it a "junk-drawer word." It covers the full range of human depravity without distinction.',
+   comer:'Wickedness is avon in Hebrew. It\'s a junk-drawer word that basically means any kind of bad behavior — from cutting off a driver in traffic to genocide.',src:'Exodus 34:7'},
+  {id:19,cat:'sin',hebrew:'פֶּשַׁע',tr:'Pesha',en:'"Rebellion" / "Transgression"',
+   meaning:'A legal, courtroom word. To pesha is to break the law — a deliberate, wilful crime against a known standard. Not stumbling; defiance. The person committing pesha knows exactly what God commands and says, "I\'ll do as I please, thank you very much."',
+   comer:'"Rebellion" is pesha. It means "to break the law." Pesha is a legal word, the type used in a courtroom. It\'s a crime — a deliberate violation.',src:'Exodus 34:7'},
+  {id:20,cat:'sin',hebrew:'חַטָּאת',tr:'Hata',en:'"Sin" — literally "to miss the mark"',
+   meaning:'Originally not a moral word — it described an archer whose arrow misses the target. Applied to human life: failing to hit the mark of all your Creator intended. Sin is not just rule-breaking; it is falling short of the full humanity we were made for.',
+   comer:'"Sin" is hata, which means "to miss the mark." Visualize an archer and a target. To "sin" is to miss the bull\'s-eye.',src:'Exodus 34:7'},
+  {id:21,cat:'other',hebrew:'מַה שְּׁמוֹ',tr:'Mah shemo?',en:'"What is his name?" (weighted)',
+   meaning:'Moses\' question in Exodus 3. Unusual phrasing — the ordinary way to ask a name was miy shimka? ("who is your name?"). By asking mah shemo, Moses was asking something deeper: what is the meaning of your name? What makes you… you? A question about identity and character, not just a label.',
+   comer:'Moses isn\'t just asking for a label. He\'s asking the Creator God, "Who are you? What are you like? Tell me about your character."',src:'Exodus 3:13'},
+  {id:22,cat:'other',hebrew:'מִי שִׁמְךָ',tr:'Miy shimka?',en:'"Who is your name?" (ordinary greeting)',
+   meaning:'The everyday Hebrew phrase for asking someone\'s name. Comer contrasts this with Moses\' more weighted question (mah shemo?) to show that Moses was not making small talk — he was asking something profound about God\'s very nature.',
+   comer:'If you lived in a Hebrew refugee camp in 1500 BC, you would walk up to a stranger and ask, "Miy shimka?" — more literally, "Who is your name?"',src:'Exodus 3 context'},
+  {id:23,cat:'other',hebrew:'שְׁמַע',tr:'Shema',en:'"Hear!" / "Listen!"',
+   meaning:'The opening word and title of the most legendary prayer in the Hebrew tradition: "Hear, O Israel: The LORD our God, the LORD is one. Love the LORD your God with all your heart and with all your soul and with all your strength." A command — hear and act on what you hear.',
+   comer:'In Deuteronomy 6, we read the great Shema — the most legendary prayer in the Hebrew tradition: "Hear, O Israel: The LORD our God, the LORD is one."',src:'Deuteronomy 6:4–5'},
+  {id:24,cat:'other',hebrew:'אַבְרָהָם',tr:'Abraham',en:'"Father of many nations" (was Abram: "exalted father")',
+   meaning:'God renamed Abram as Abraham as a declaration of future reality — as if the promise was already fulfilled. He had no children when the promise was given. Every time someone called his name, it announced what God had said.',
+   comer:'A personal name was thought to indicate something essential about the bearer\'s identity or the divine purpose they were intended to fulfill.',src:'Genesis 17:5'},
+  {id:25,cat:'other',hebrew:'יִצְחָק',tr:'Yitzhak (Isaac)',en:'"Laughter"',
+   meaning:'When Sarah heard at age 90 that she would conceive a son, it was so absurd she laughed. And so the miracle child was named Laughter — a name that forever carries the memory of impossible hope becoming real.',
+   comer:'Isaac means "laughter." When his mom heard that she would have a son in her old age, it was so preposterous that she started to laugh.',src:'Genesis 21:3–6'},
+  {id:26,cat:'other',hebrew:'יַעֲקֹב',tr:"Ya'akov (Jacob)",en:'"Heel grabber" — euphemism for deceiver',
+   meaning:'Jacob was born grasping Esau\'s heel, and his biography lived up to it: one deception after another. Then came his night of wrestling with God, and a new name: Israel. Yahweh renames people when he remakes them.',
+   comer:'Jacob means "heel grabber," a euphemism for a liar and a cheat. And his biography is exactly that — one con after another.',src:'Genesis 25:26; 32:28'},
+  {id:27,cat:'other',hebrew:'יִשְׂרָאֵל',tr:'Yisrael (Israel)',en:'"He struggles with God"',
+   meaning:'The name God gave Jacob after their night of wrestling. Not "he obeyed God" — he struggled. God honours the one who refuses to let go, who wrestles honestly and desperately. An entire nation defined not by perfection but by persistent, wrestled-for faith.',
+   comer:'Then God renames him, from Jacob to Israel, which means "he struggles with God." From then on, he\'s a changed man.',src:'Genesis 32:28'},
+];
+
+let activeCat = 'all', searchVal = '';
+
+function render() {
+  const f = words.filter(w => {
+    const mc = activeCat === 'all' || w.cat === activeCat;
+    const ms = !searchVal || w.tr.toLowerCase().includes(searchVal) ||
+      w.en.toLowerCase().includes(searchVal) || w.meaning.toLowerCase().includes(searchVal);
+    return mc && ms;
+  });
+  if (!f.length) { document.getElementById('grid').innerHTML = '<p class="empty">No words found.</p>'; return; }
+  document.getElementById('grid').innerHTML = f.map((w,i) => {
+    const m = CAT[w.cat];
+    return `<div class="card" style="animation-delay:${i*0.03}s" onclick="openModal(${w.id})">
+      <div class="card-tag ${m.cls}">${m.label}</div>
+      <div class="card-hebrew">${w.hebrew}</div>
+      <div class="card-transliteration">${w.tr}</div>
+      <div class="card-translation">${w.en}</div>
+      <div class="card-rule"></div>
+      <div class="card-meaning">${w.meaning.slice(0,108)}…</div>
+      <div class="card-source">${w.src}</div>
+    </div>`;
+  }).join('');
+}
+
+function filterCat(cat, btn) {
+  activeCat = cat;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  // Update the active filter label in header
+  const labels = { all:'All words', names:'Names of God', character:'Character of God', sin:'Sin & Forgiveness', other:'Words & Phrases' };
+  document.getElementById('active-label').textContent = labels[cat];
+  closeMenu();
+  render();
+}
+
+function toggleMenu() {
+  const burger = document.getElementById('burger');
+  const dropdown = document.getElementById('dropdown');
+  burger.classList.toggle('open');
+  dropdown.classList.toggle('open');
+}
+
+function closeMenu() {
+  document.getElementById('burger').classList.remove('open');
+  document.getElementById('dropdown').classList.remove('open');
+}
+
+function filterSearch(v) { searchVal = v.toLowerCase().trim(); render(); }
+
+function openModal(id) {
+  const w = words.find(x => x.id === id); if (!w) return;
+  const m = CAT[w.cat];
+  document.getElementById('modal-body').innerHTML = `
+    <div class="modal-top">
+      <div class="card-tag ${m.cls}" style="margin-bottom:0">${m.label}</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-hebrew">${w.hebrew}</div>
+    <div class="modal-tr">${w.tr}</div>
+    <div class="modal-en">${w.en}</div>
+    <div class="modal-rule"></div>
+    <div class="modal-meaning">${w.meaning}</div>
+    <div class="modal-quote">
+      <p>${w.comer}</p>
+      <cite>— John Mark Comer, God Has a Name · ${w.src}</cite>
+    </div>`;
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function maybeClose(e) { if (e.target === document.getElementById('overlay')) closeModal(); }
+
+// Close dropdown when clicking outside
+document.addEventListener('click', e => {
+  const burger = document.getElementById('burger');
+  const dropdown = document.getElementById('dropdown');
+  if (!burger.contains(e.target) && !dropdown.contains(e.target)) closeMenu();
+});
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeMenu(); } });
+
+render();
+</script>
+</body>
+</html>
